@@ -16,9 +16,16 @@ class Region {
 	 * @param array
 	 */
 	protected $domains = [
-		'ru' => 'https://eu.api.pvp.net/api/lol/', 
-		'tr' => 'https://eu.api.pvp.net/api/lol/',
-		'kr' => 'https://kr.api.pvp.net/api/lol/',
+		'br'	=> 'https://br.api.pvp.net/api/lol/', 
+		'eune'	=> 'https://eune.api.pvp.net/api/lol/',
+		'euw'	=> 'https://euw.api.pvp.net/api/lol/',
+		'kr'	=> 'https://kr.api.pvp.net/api/lol/',
+		'las'	=> 'https://las.api.pvp.net/api/lol/',
+		'lan'	=> 'https://lan.api.pvp.net/api/lol/',
+		'na'	=> 'https://na.api.pvp.net/api/lol/',
+		'oce'	=> 'https://oce.api.pvp.net/api/lol/',
+		'tr'	=> 'https://tr.api.pvp.net/api/lol/',
+		'ru'	=> 'https://ru.api.pvp.net/api/lol/',
 	];
 
 	/**
