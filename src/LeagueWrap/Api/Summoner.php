@@ -199,8 +199,13 @@ class Summoner extends AbstractApi {
 		$ids = implode(',', $ids);
 
 		$array     = $this->request('summoner/'.$ids.'/runes');
-        if($returnRaw)
-            return json_encode($array);
+		
+        if($returnRaw && count($array) == 1)
+		{
+			$summonerData = reset($array);
+			return json_encode($summonerData['pages']);
+		}
+		
 		$summoners = [];
 		foreach ($array as $summonerId => $data)
 		{
@@ -258,8 +263,11 @@ class Summoner extends AbstractApi {
 
 		$array     = $this->request('summoner/'.$ids.'/masteries');
 
-        if($returnRaw)
-            return json_encode($array);
+        if($returnRaw && count($array) == 1)
+		{
+			$summonerData = reset($array);
+			return json_encode($summonerData['pages']);
+		}
 
 		$summoners = [];
 		foreach ($array as $summonerId => $data)
