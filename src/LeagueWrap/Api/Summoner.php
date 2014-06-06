@@ -91,7 +91,7 @@ class Summoner extends AbstractApi {
 		{
 			foreach ($identities as $identity)
 			{
-				if (filter_var($identity, FILTER_VALIDATE_INT) !== FALSE)
+				if (is_int($identity))
 				{
 					// it's the id
 					$ids[] = $identity;
@@ -105,7 +105,7 @@ class Summoner extends AbstractApi {
 		}
 		else
 		{
-			if (filter_var($identities, FILTER_VALIDATE_INT) !== FALSE)
+			if (is_int($identities))
 			{
 				// it's the id
 				$ids[] = $identities;
@@ -193,12 +193,14 @@ class Summoner extends AbstractApi {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function runePages($identities)
+	public function runePages($identities, $returnRaw = false)
 	{
 		$ids = $this->extractIds($identities);
 		$ids = implode(',', $ids);
 
 		$array     = $this->request('summoner/'.$ids.'/runes');
+        if($returnRaw)
+            return json_encode($array);
 		$summoners = [];
 		foreach ($array as $summonerId => $data)
 		{
@@ -222,7 +224,7 @@ class Summoner extends AbstractApi {
 				{
 					$id         = $slot['runeSlotId'];
 					$rune       = new Rune($slot);
-					$runes[$id] = $rune;
+					$runes[$id] = $slot['runeId'];
 				}
 				$runePage->runes = $runes;
 				$runePages[]     = $runePage;
@@ -249,12 +251,16 @@ class Summoner extends AbstractApi {
 	 * @return array
 	 * @throws Exception
 	 */
-	public function masteryPages($identities)
+	public function masteryPages($identities, $returnRaw = false)
 	{
 		$ids = $this->extractIds($identities);
 		$ids = implode(',', $ids);
 
 		$array     = $this->request('summoner/'.$ids.'/masteries');
+
+        if($returnRaw)
+            return json_encode($array);
+
 		$summoners = [];
 		foreach ($array as $summonerId => $data)
 		{

@@ -2,10 +2,12 @@
 namespace LeagueWrap;
 
 use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Exception\ServerException;
 
 class Client implements ClientInterface {
 
 	protected $guzzle;
+    public $log = [];
 
 	/**
 	 * Sets the base url to be used for future requests.
@@ -34,8 +36,27 @@ class Client implements ClientInterface {
 		}
 
 		$uri      = $path.'?'.http_build_query($params);
-		$response = $this->guzzle
-		                 ->get($uri);
+
+        $mt = microtime(true);
+        try
+        {
+            $response = $this->guzzle
+                             ->get($uri);
+        }
+        catch(ServerException $e)
+        {
+            if($e->getCode() == 503)
+            {
+                $dif = microtime(true) - $mt;
+                $this->log[] = [ "error" => '503', "url" => $this->guzzle->getBaseUrl() . $uri, "time" => $dif ];
+                return $this->request($path, $params);
+            }
+            else
+                throw $e;
+        }
+
+        $dif = microtime(true) - $mt;
+        $this->log[] = [ "url" => $this->guzzle->getBaseUrl() . $uri, "time" => $dif ];
 		
 		$body = $response->getBody();
 		$body->seek(0);

@@ -13,7 +13,7 @@ class Region {
 	/**
 	 * The default domain to attempt to query
 	 */
-	protected $defaultDomain = 'https://%s.api.pvp.net/api/lol/';
+	protected $defaultDomain = 'http://%s.api.pvp.net/api/lol/';
 
 	public function __construct($region)
 	{

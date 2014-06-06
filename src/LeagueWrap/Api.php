@@ -171,6 +171,11 @@ class Api {
 		return $this;
 	}
 
+    public function getLog()
+    {
+        return $this->client->log;
+    }
+
 	/**
 	 * Set wether or not to attach static data to all requests done on this
 	 * api.
